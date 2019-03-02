@@ -234,14 +234,17 @@ function showDetailsModal(
   artists,
   fileExtension,
   fileUrl,
+//  imgName,
   fileDescription,
   result
 ) {
   currentUrl = "https://e621.net/post/show/" + fileId;
-  currentId = fileId;
+  currentId = fileId; 
   $("#detailsModal").modal("open");
   document.getElementById("downloadButton").onclick = function() {
-    download(currentUrl, "e" + currentId + "." + fileExtension);
+    sstr = fileUrl.substring(fileUrl.lastIndexOf('/')+1)
+    imgName = sstr.substring(0, sstr.lastIndexOf('.'))
+    download(fileUrl, "p" + currentId + ", " + imgName + "." + fileExtension);
   };
   document.getElementById("fullsizeButton").setAttribute("href", fileUrl);
   document.getElementById("e621Button").setAttribute("href", currentUrl);
@@ -406,6 +409,7 @@ function pagePrevious() {
 function getQueryVariable(variable) {
   var query = window.location.search.substring(1);
   var vars = query.split("&");
+  verboseLog("Vars= " + vars);
   for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split("=");
     if (pair[0] == variable) {
@@ -430,6 +434,11 @@ function updatePageNumber() {
 // Print to console only if verbose output is enabled
 function verboseLog(text) {
   if (verboseOutput) console.log(text);
+}
+
+// fix%20those%20darn%20spaces%20(depreciated)
+function restoreSpaces() {
+  document.getElementById("tags").value = currentSearch.replace("%20", " ");
 }
 
 // enable enter key functionality on search box
