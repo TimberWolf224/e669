@@ -6,7 +6,7 @@
     <title>e669</title>
     <meta content="If you don't know what this is, that's probably a good thing." name="description"/>
     <meta content="furry, anthropomorphic, e621, porn, pornography, explicit, image, booru" name="keywords"/>
-    <meta content="deltaryz" name="author"/>
+    <meta content="deltaryz, TimberWolf224" name="author"/>
 
 <!-- no need to pretty all of these up so much, Delta. It makes it a pain to scroll past. I compacted them for my sake, remember I'm editing in Nano.
 Also the links need to be local, ie, "ico/apple", not global. Leaving them global causes them to 404. ~Timber -->
@@ -33,96 +33,38 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
 
     <!--Let browser know website is optimized for mobile-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
     <style>
-      .input-field input[type="search"] {
-        height: 64px !important;
-      }
-      .btn-floating {
-        background-color: #666ad1;
-      }
+      .input-field input[type="search"] {height: 64px !important;}
+      .btn-floating {background-color: #666ad1;}
 
-      body {
-        font-family: "Roboto", sans-serif;
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-        background-color: #152f56;
-      }
+      body {font-family: "Roboto", sans-serif; display: flex; min-height: 100vh; flex-direction: column; background-color: #152f56;}
+      main {flex: 1 0 auto;}
 
-      main {
-        flex: 1 0 auto;
-      }
-
-      .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
-        width: 100%;
-      }
-
-      .grid {
-        margin: 0 auto;
-      }
+      .center {margin: 0; position: absolute; top: 50%; transform: translate(0, -50%); width: 100%;}
+      .grid {margin: 0 auto;}
 
       /* clearfix */
-      .grid:after {
-        content: "";
-        display: block;
-        clear: both;
-      }
-
-      .invert-on-edit {
-        color: white;
-      }
+      .grid:after {content: ""; display: block; clear: both;}
+      .invert-on-edit {color: white;}
 
       /* 3 columns by default */
-      .grid-item {
-        width: 30vw;
-        float: left;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
-        transition: box-shadow 0.3s ease-in-out;
-      }
+      .grid-item {width: 30vw; float: left; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 1); transition: box-shadow 0.3s ease-in-out;}
 
-      .webm-shadow {
-        border-radius: 10px;
-        border: 4px solid red;
-      }
-
-      .swf-shadow {
-        border-radius: 10px;
-        border: 4px solid blue;
-      }
-
-      .grid-item:hover {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      }
+      .webm-shadow {border-radius: 10px; border: 4px solid red;}
+      .swf-shadow {border-radius: 10px; border: 4px solid blue;}
+      .grid-item:hover {box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);}
 
       /* 5 columns for larger screens */
       @media screen and (min-width: 900px) {
-        .grid-item {
-          width: 18vw;
-          float: left;
-          margin-bottom: 20px;
-        }
+        .grid-item {width: 18vw; float: left; margin-bottom: 20px;}
       }
 
       /* Shrink navigation margins for narrow screens */
       @media screen and (max-width: 600px) {
-        .right {
-          margin-left: 0px;
-          margin-right: 0px;
-        }
-
-        .left {
-          margin-left: 0px;
-          margin-right: 0px;
-        }
-
-        .input-field input[type="search"] {
-          height: 56px !important;
-        }
+        .right {margin-left: 0px; margin-right: 0px;}
+        .left {margin-left: 0px; margin-right: 0px;}
+        .input-field input[type="search"] {height: 56px !important;}
       }
     </style>
 
@@ -132,8 +74,9 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
     <script src="js/imagesloaded.min.js" type="text/javascript"></script>
     <script src="js/download.js" type="text/javascript"></script>
   </head>
+  
   <body>
-    <header>
+    <header> <!-- Don't mess with this formatting too much. It breaks stuff... Don't ask me how I know... -->
       <div class="navbar-fixed">
         <nav style="background-color: #284A81">
           <div class="nav-wrapper">
@@ -141,37 +84,18 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
               <div class="col s7 m6 l8">
                 <div class="row">
                   <div class="col input-field s10">
-                    <input
-                      class="input-field invert-on-edit"
-                      id="tags"
-                      name="tags"
-                      type="search"
-                      placeholder="Search"
-                    />
-                    <label class="label-icon" for="tags"
-                      ><i class="material-icons">search</i></label
-                    >
+                    <input class="input-field invert-on-edit" id="tags" name="tags" type="search" placeholder="Search"/>
+                    <label class="label-icon" for="tags">
+                    <i class="material-icons">search</i></label>
                   </div>
                   <div class="col s2 hide-on-med-and-down">
                     <a
                       ;
-                      class="waves-effect waves-light btn center-align"
-                      onclick="getSearchQuery(true)"
-                      style="background-color: #2F5899"
-                    >
-                      Search
-                    </a>
+                      class="waves-effect waves-light btn center-align" onclick="getSearchQuery(true)" style="background-color: #2F5899">Search</a>
 
-                    <input
-                      class="center"
-                      id="resultAmount"
-                      name="resultAmount"
-                      size="2"
+                    <input class="center" id="resultAmount" name="resultAmount" size="2"
                       style="color: white; text-align: center; width: 5%; height:25px; margin-left: 30px; background-color: #152f56; border-bottom: 0; border-radius: 3px;"
-                      type="number"
-                      value="20"
-                      step="10"
-                    />
+                      type="number" value="20" step="10"/>
                   </div>
                 </div>
               </div>
@@ -179,41 +103,25 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
               <div class="col s5 m6 l4">
                 <ul class="right">
                   <li>
-                    <a
-                      class="waves-effect waves-light disabled"
-                      id="btnPreviousPage"
-                      onclick="pagePrevious()"
-                      style="width: 25px; margin-left: 0; padding-left: 0; margin-right: 10px;"
-                    >
+                    <a class="waves-effect waves-light disabled" id="btnPreviousPage" onclick="pagePrevious()" style="width: 25px; 
+                    margin-left: 0; padding-left: 0; margin-right: 10px;">
                       <i class="material-icons left">keyboard_arrow_left</i>
                     </a>
                   </li>
                   <li>
-                    <a
-                      class=""
-                      id="pageNumber"
-                      onclick="document.location=requestURL.replace(corsForwardURL, '').replace('.json', '');"
-                      style="text-align: center; padding-left: 10px; padding-right: 10px!important; background-color: #284A81"
-                      ><b>1</b></a
-                    >
+                    <a class="" id="pageNumber" onclick="document.location=requestURL.replace(corsForwardURL, '').replace('.json', '');"
+                      style="text-align: center; padding-left: 10px; padding-right: 10px!important; background-color: #284A81">
+                    <b>1</b></a>
                   </li>
                   <li>
-                    <a
-                      class="waves-effect waves-light"
-                      id="btnNextPage"
-                      onclick="pageNext()"
-                      style="width: 25px; margin-right: 10px; padding-right: 0; margin-left: 10px;"
-                    >
+                    <a class="waves-effect waves-light" id="btnNextPage" onclick="pageNext()"
+                    style="width: 25px; margin-right: 10px; padding-right: 0; margin-left: 10px;">
                       <i class="material-icons right">keyboard_arrow_right</i>
                     </a>
                   </li>
 		  <li>
-		    <a
-			class="waves-effect waves-light"
-			id="btnSettings"
-			onclick="openSettings()"
+		    <a class="waves-effect waves-light" id="btnSettings" onclick="openSettings()"
 			style="width: 55px; margin-right: 0; padding-right: 0; margin-left 0;">
-			
 			<i class="material-icons">settings</i>
 		    </a>
 		  </li>
@@ -236,36 +144,22 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
       </div>
       <div class="grid"></div>
 
-      <div
-        class="modal modal-fixed-footer"
-        id="detailsModal"
-        style="width: 90%; height:100%; max-height: 80%;"
-      >
+      <div class="modal modal-fixed-footer" id="detailsModal" style="width: 90%; height:100%; max-height: 80%;">
         <div class="modal-content">
           <div class="row">
             <div class="col s12 l8">
               <p id="modalImage" style="text-align: center;">text</p>
             </div>
             <div class="col s12 l4">
-              <p>
-                Left-click to search single tags, middle-click to open a new
-                tab, right-click to add to existing query.
-              </p>
+              <p>Left-click to search single tags, middle-click to open a new tab, right-click to add to existing query.</p>
               <div id="modalArtists">artists go here</div>
-              <p
-                id="modalTags"
-                style="display: flex; flex-direction: row; flex-wrap:wrap; justify-content: space-between;"
-              >
-                text
-              </p>
+              <p id="modalTags" style="display: flex; flex-direction: row; flex-wrap:wrap; justify-content: space-between;">text</p>
             </div>
           </div>
 
           <div class="row">
             <div class="col s12">
-              <p id="modalDesc">
-                text
-              </p>
+              <p id="modalDesc">text</p>
             </div>
             <div class="col s12">
               <p id="modalMetadata">Metadata</p>
@@ -274,34 +168,12 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
         </div>
         <div class="modal-footer">
           <!-- TODO: fix download so files aren't corrupted -->
-          <a
-            class="waves-effect waves-teal btn-flat hiddendiv"
-            id="saveButton"
-            >Save (broken)</a
-          >
-          <a
-            class="waves-effect waves-teal btn-flat"
-            id="downloadButton"
-            >Download</a
-          >
-          <a
-            class="modal-close waves-effect waves-teal btn-flat"
-            id="fullsizeButton"
-            >Fullsize</a
-          >
-          <a
-            class="modal-close waves-effect waves-teal btn-flat"
-            id="e621Button"
-            >E621</a
-          >
-          <a
-            class="modal-close waves-effect waves-teal btn-flat"
-            onclick="getSearchQuery(true)"
-            >Re-Search</a
-          >
-          <a class="modal-close waves-effect waves-teal btn-flat" href="#!"
-            >Close</a
-          >
+          <a class="waves-effect waves-teal btn-flat hiddendiv" id="saveButton">Save (broken)</a>
+          <a class="waves-effect waves-teal btn-flat" id="downloadButton">Download</a>
+          <a class="modal-close waves-effect waves-teal btn-flat" id="fullsizeButton">Fullsize</a>
+          <a class="modal-close waves-effect waves-teal btn-flat" id="e621Button">E621</a>
+          <a class="modal-close waves-effect waves-teal btn-flat" onclick="getSearchQuery(true)">Re-Search</a>
+          <a class="modal-close waves-effect waves-teal btn-flat" href="#!">Close</a>
         </div>
       </div>
 
@@ -313,17 +185,10 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
         <div class="col s2"></div>
         <div class="col s8">
           <div class="center-align">
-            <a
-              href="https://github.com/techniponi/e669/"
-              style="color: #ffffff"
-            >
-              <img
-                src="ico/favicon-96x96.png"
-                style="text-align: center; height: 64px; -webkit-filter: drop-shadow(0 0px 2px rgba(0, 0, 0, 0.5));"/></a
-            ><br />
-            e669 is created by
-            <a href="https://twitter.com/deltaryz"><b>∆•RYZ</b></a>
-	    with help from <a href=/>TimberWolf224</a>
+            <a href="https://github.com/techniponi/e669/" style="color: #ffffff">
+              <img src="ico/favicon-96x96.png"
+                style="text-align: center; height: 64px; -webkit-filter: drop-shadow(0 0px 2px rgba(0, 0, 0, 0.5));"/></a>
+	    <br />e669 is created by <a href="https://twitter.com/deltaryz"><b>∆•RYZ</b></a> with help from <a href=/>TimberWolf224</a>
           </div>
         </div>
         <div class="col s2 right"></div>

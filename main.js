@@ -3,12 +3,17 @@ var currentPage = 1;
 
 var blacklistedTags = "";
 
+var fullsizeNewWindow = true; //set true for testing purposes. Will eventually be set by the pref cookie.
+var gfileUrl = ""; //make this static so we can reference it later...
+
 var grid = $(".grid"); // fine, i'll use jquery ._.
+//don't like jquery, hmm, delta? What's wrong with jquery? (don't answer that :P)
 
 // URL query vars
 var lastSearchTags = "";
 var requestURL = ""; // init for later
-var corsForwardURL = "https://cors.dusky.horse/";
+//var corsForwardURL = "https://cors.dusky.horse/"; //because apparently we switched CORS domains...
+var corsForwardURL = "https://cors.e669.fun/";
 
 // ethereal page navigation or traditional?
 var etherealNavigation = false; // default false for now
@@ -227,7 +232,7 @@ function getSearchQuery(userTriggered) {
 }
 
 /*
-// SETTINGS RELATED FUNCTIONS
+// Timber Made Functions. Could be broken.
 */
 
 function openSettings() {
@@ -235,30 +240,31 @@ function openSettings() {
         settingswin = window.open("settings.html", "Settings", "width=600,height=300");
 
 };
+function fullscreenOpen() {
+        window.open(gfileUrl);
+
+};
 
 /*
 // GENERAL HELPER FUNCTIONS
 */
 
-function showDetailsModal(
-  tags,
-  fileId,
-  artists,
-  fileExtension,
-  fileUrl,
-//  imgName,
-  fileDescription,
-  result
-) {
+function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDescription, result) {//imgName tag removed
   currentUrl = "https://e621.net/post/show/" + fileId;
-  currentId = fileId; 
+  currentId = fileId;
+  gfileUrl = fileUrl; 
   $("#detailsModal").modal("open");
   document.getElementById("downloadButton").onclick = function() {
     sstr = fileUrl.substring(fileUrl.lastIndexOf('/')+1)
     imgName = sstr.substring(0, sstr.lastIndexOf('.'))
     download(fileUrl, "p" + currentId + ", " + imgName + "." + fileExtension);
   };
-  document.getElementById("fullsizeButton").setAttribute("href", fileUrl);
+//  document.getElementById("fullsizeButton").setAttribute("href", fileUrl);
+  if (fullsizeNewWindow == true) {
+	document.getElementById("fullsizeButton").setAttribute("onclick", "fullscreenOpen()");
+  } else if (fullsizeNewWindow == false) {
+	document.getElementById("fullsizeButton").setAttribute("href", fileUrl);
+  };
   document.getElementById("e621Button").setAttribute("href", currentUrl);
   document.getElementById("modalImage").innerHTML =
     "<img style='max-width: 100%' src='" + fileUrl + "' />";
@@ -460,3 +466,4 @@ document.getElementById("tags").addEventListener("keyup", function(event) {
     getSearchQuery(true);
   }
 });
+
