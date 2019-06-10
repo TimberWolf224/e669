@@ -1,6 +1,8 @@
 var verboseOutput = true; // make the terminal vomit everything
 var currentPage = 1;
 
+var blacklistedTags = "";
+
 var grid = $(".grid"); // fine, i'll use jquery ._.
 
 // URL query vars
@@ -223,6 +225,16 @@ function getSearchQuery(userTriggered) {
     });
   }
 }
+
+/*
+// SETTINGS RELATED FUNCTIONS
+*/
+
+function openSettings() {
+//      alert("This feature is in development and is currently not avaliable, sorry!")
+        settingswin = window.open("settings.html", "Settings", "width=600,height=300");
+
+};
 
 /*
 // GENERAL HELPER FUNCTIONS
