@@ -148,7 +148,7 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
       </div>
       <div class="grid"></div>
     <div class="modal" id="cookieToaster" style="width: 90%; height:20%; background-color: #2F5899">
-	<p style="color: #ffffff">This website uses a cookie to store user preferences. By continuing to use this site, you are accepting the use of cookies. <br>
+	<p style="color: #ffffff; padding-left: 10px">This website uses a cookie to store user preferences. By continuing to use this site, you are accepting the use of cookies. <br>
 	You can delete all cookies from this page from the settings menu. Or click <a href=ingredients>here</a> to learn more about what goes into our cookies.</p>
 	<a onclick="verboseLog('User closes the dialog and thus consents to cookies.'); setCookie('gdpr', 'true', 365);" class="modal-close waves-effect waves-light btn white-text"; style="background-color: #2F5899">Got it!</a>
     </div>
@@ -166,6 +166,11 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
                     <span>Verbose console output</span>
                 </label>
                 <br/>
+		<label>
+                    <input type="checkbox" class="filled-in" id="fullscreen" checked="checked">
+                    <span>Open "fullscreen" button in new tab</span>
+                </label>
+		<br>
                 <label>
                     <input type="checkbox" class="filled-in" id="horizontalOrder" checked="checked">
                     <span>Maintain horizontal order of search results</span>
@@ -189,7 +194,9 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
         </div>
         <div class="modal-footer" style="background-color: #2F5899">
             <a onclick="deleteAllCookies()" class="modal-close waves-effect waves-light btn-flat red-text"><b>Delete cookies</b></a>
-            <a onclick="saveSettings()" class="modal-close waves-effect waves-light btn white-text"; style="background-color: #2F5899">Save settings</a>
+            <a onclick="saveSettings()" class="modal-close waves-effect waves-light btn white-text"; style="background-color: #2F5899">Save and close</a>
+            <a class="modal-close waves-effect waves-light btn white-text"; style="background-color: #2F5899">Close</a>
+
         </div>
     </div>
 

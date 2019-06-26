@@ -101,7 +101,7 @@ if (getQueryVariable("page")) {
 if (getQueryVariable("search")) {
   var currentSearch = getQueryVariable("search");
   if (currentSearch === "false") currentSearch = ""; // make sure blank searches don't get stringified to "false"
-  document.getElementById("tags").value = currentSearch.replace("%20", " "); // de-URLify this for the textbox
+  document.getElementById("tags").value = currentSearch.replace("%20", " "); // de-URLify this for the textbox //Why does this still not work?!
   getSearchQuery(false); // automatically trigger search
 }
 
@@ -114,14 +114,10 @@ function getSearchQuery(userTriggered) {
         verboseLog("User has not enabled R18+ settings, manually enforcing rating:safe tag.");
         if (currentApi == "e621") {
             // make sure we aren't redundantly adding more
-            if (!tags.includes("rating:safe")) {
-                tags += "%20rating:safe";
-            }
+            if (!tags.includes("rating:safe")) {tags += "%20rating:safe";}
         } else if (currentApi == "derpi") {
             // make sure we aren't redundantly adding more
-            if (!tags.includes("safe")) {
-                tags += ",safe";
-            }
+            if (!tags.includes("safe")) {tags += ",safe";}
         }
     }
 
@@ -131,9 +127,7 @@ function getSearchQuery(userTriggered) {
       currentPage = 1;
       document.getElementById("btnPreviousPage").classList.add("disabled");
       updatePageNumber();
-    } else {
-      reloadPage(1, tags);
-    }
+    } else {reloadPage(1, tags);}
   }
 
   // so we can later pull the current search more easily
@@ -153,12 +147,7 @@ function getSearchQuery(userTriggered) {
 
   // make array of tags
   var splitTags = tags.split(" ");
-  verboseLog(
-    "User searched with tags:\n" +
-      splitTags +
-      "\nArray length: " +
-      splitTags.length
-  );
+  verboseLog("User searched with tags:\n" + splitTags + "\nArray length: " + splitTags.length);
 
   // check if there are more than 6 tags
   if (splitTags.length > 6 && currentApi == "e621") {
@@ -177,25 +166,9 @@ function getSearchQuery(userTriggered) {
             // to manage the user-facing page separately from the API request page.
             // Derpibooru requires no such micromanaging as its more versatile search
             // queries remove the necessity for pagination on e669 like we do for e621.
-            requestURL =
-                corsForwardURL +
-                "e621.net:443/post/index.json?limit=" +
-                resultSize + // TODO: paginate on e669->e621 side - 320 max posts per query
-                "&page=" +
-                currentPage +
-                "&tags=" +
-                tags;
+            requestURL = corsForwardURL + "e621.net:443/post/index.json?limit=" + resultSize + // TODO: paginate on e669->e621 side - 320 max posts per query "&page=" + currentPage + "&tags=" + tags;
         } else if (currentApi == "derpi") {
-            requestURL =
-                corsForwardURL +
-                "derpibooru.org:443/search.json?perpage=" +
-                resultSize +
-                "&page=" +
-                currentPage +
-                "&q=" +
-                tags +
-                "&key=" +
-                derpiApiKey;
+            requestURL = corsForwardURL + "derpibooru.org:443/search.json?perpage=" + resultSize + "&page=" + currentPage + "&q=" + tags + "&key=" + derpiApiKey;
         }
 
     // create request
@@ -209,11 +182,8 @@ function getSearchQuery(userTriggered) {
     request.onload = function () {
             verboseLog("Request has loaded");
             var results;
-            if (currentApi == "derpi") {
-                results = request.response["search"];
-            } else if (currentApi == "e621") {
-                results = request.response;
-            }
+            if (currentApi == "derpi") {results = request.response["search"];
+            } else if (currentApi == "e621") {results = request.response;}
             // TODO: add logic to paginate results
             appendResultsToPage(results); // Add results to page
             statusDiv.innerHTML = "";
@@ -297,15 +267,7 @@ function getSearchQuery(userTriggered) {
         image.src = fileSampleUrl;
         link.appendChild(image);
         link.addEventListener("click", function(event) {
-          showDetailsModal(
-            fileTags,
-            fileId,
-            artistName,
-            fileType,
-            fileUrl,
-            fileDescription,
-            result
-          );
+          showDetailsModal(fileTags, fileId, artistName, fileType, fileUrl, fileDescription, result);
           event.preventDefault();
         });
 
@@ -378,15 +340,7 @@ function getSearchQuery(userTriggered) {
                         image.src = fileSampleUrl;
                         link.appendChild(image);
                         link.addEventListener("click", function (event) {
-                            showDetailsModal(
-                                fileTags,
-                                fileId,
-                                artistName,
-                                fileType,
-                                fileUrl,
-                                fileDescription,
-                                result
-                            );
+                            showDetailsModal(fileTags, fileId, artistName, fileType, fileUrl, fileDescription, result);
                             event.preventDefault();
                         });
 
@@ -471,47 +425,19 @@ function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDes
   }
   var modalMetadata = document.getElementById("modalMetadata");
   if (currentApi == "e621") {
-        modalMetadata.innerHTML =
-            "Dimensions: " +
-            result["width"] +
-            "x" +
-            result["height"] +
-            "<br />" +
-            "MD5: " +
-            result["md5"] +
-            "<br/>" +
-            "Rating: " +
-            result["rating"] +
-            "<br/>" +
-            "Sources: ";
+        modalMetadata.innerHTML = "Dimensions: " + result["width"] + "x" + result["height"] + "<br />" + "MD5: " + result["md5"] + "<br/>" + "Rating: " + result["rating"] + "<br/>" + "Sources: ";
 
         // if the image has sources, list them
         if (result["sources"]) {
             result["sources"].forEach(function (source, index) {
                 modalMetadata.innerHTML +=
-                    "<a class='btn-small blue' style='margin-right: 10px;' href='" +
-                    source +
-                    "'>" +
-                    ++index +
-                    "</a>";
+                    "<a class='btn-small blue' style='margin-right: 10px;' href='" + source + "'>" + ++index + "</a>";
             });
         } else {
             modalMetadata.innerHTML += "(none)";
         }
     } else if (currentApi == "derpi") {
-        modalMetadata.innerHTML =
-            "Dimensions: " +
-            result["width"] +
-            "x" +
-            result["height"] +
-            "<br />" +
-            "sha512: " +
-            result["orig_sha512_hash"] +
-            "<br/>" +
-            "Score: " +
-            result["score"] +
-            "<br/>" +
-            "Sources: ";
+        modalMetadata.innerHTML = "Dimensions: " + result["width"] + "x" + result["height"] + "<br />" + "sha512: " + result["orig_sha512_hash"] + "<br/>" + "Score: " + result["score"] + "<br/>" + "Sources: ";
 
         // if the image has a source, display it
         if (result["source_url"]) {
@@ -527,11 +453,8 @@ function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDes
   modalArtists.innerHTML = "";
   artistArray.forEach(function(tag) {
     var currentTag = document.createElement("a");
-    if (currentApi == "e621") {
-            currentTag.href = "?search=" + tag + "&api=e621" + "&pagesize=" + document.getElementById("resultAmount").value;
-        } else if (currentApi == "derpi") {
-            currentTag.href = "?search=" + tag + "&api=derpi" + "&pagesize=" + document.getElementById("resultAmount").value;
-        }
+    if (currentApi == "e621") {currentTag.href = "?search=" + tag + "&api=e621" + "&pagesize=" + document.getElementById("resultAmount").value;
+     } else if (currentApi == "derpi") {currentTag.href = "?search=" + tag + "&api=derpi" + "&pagesize=" + document.getElementById("resultAmount").value;}
 
     currentTag.setAttribute("class", "waves-effect waves-light btn blue");
     currentTag.setAttribute("style", "margin-right: 5px; margin-bottom: 5px;");
@@ -545,12 +468,8 @@ function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDes
     currentTag.addEventListener("click", function (event) {
             event.preventDefault();
 
-            if (currentApi == "e621") {
-                window.location =
-                    "?search=" + tag + "&api=e621" + "&pagesize=" + document.getElementById("resultAmount").value;
-            } else if (currentApi == "derpi") {
-                window.location = "?search=" + tag + "&api=derpi" + "&pagesize=" + document.getElementById("resultAmount").value;
-            }
+            if (currentApi == "e621") {window.location = "?search=" + tag + "&api=e621" + "&pagesize=" + document.getElementById("resultAmount").value;
+            } else if (currentApi == "derpi") {window.location = "?search=" + tag + "&api=derpi" + "&pagesize=" + document.getElementById("resultAmount").value;}
             return false;
         });
         modalArtists.appendChild(currentTag);
@@ -558,11 +477,8 @@ function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDes
 
     // format tags correctly
     var tagArray;
-    if (currentApi == "e621") {
-        tagArray = tags.split(" ");
-    } else if (currentApi == "derpi") {
-        tagArray = tags.split(", ");
-    }
+    if (currentApi == "e621") {tagArray = tags.split(" ");
+    } else if (currentApi == "derpi") {tagArray = tags.split(", ");}
     
   var modalTags = document.getElementById("modalTags");
   modalTags.innerHTML = "";
@@ -580,21 +496,9 @@ function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDes
 
     currentTag.addEventListener("click", function(event) {
       event.preventDefault();
-      if (currentApi == "e621") {
-                window.location =
-                    "?search=" +
-                    tag +
-                    "&api=e621" +
-                    "&pagesize=" +
-                    document.getElementById("resultAmount").value;
+      if (currentApi == "e621") {window.location = "?search=" + tag + "&api=e621" + "&pagesize=" + document.getElementById("resultAmount").value;
             } else if (currentApi == "derpi") {
-                window.location =
-                    "?search=" +
-                    tag +
-                    "&api=derpi" +
-                    "&pagesize=" +
-                    document.getElementById("resultAmount").value;
-            }
+                window.location = "?search=" + tag + "&api=derpi" + "&pagesize=" + document.getElementById("resultAmount").value;}
       return false;
     });
     modalTags.appendChild(currentTag);
@@ -607,11 +511,8 @@ function reloadPage(paramPage, paramSearch, paramPageSize) {
   if (!paramSearch) paramSearch = document.getElementById("tags").value;
   if (!paramPageSize) paramPageSize = document.getElementById("resultAmount").value;
 
-    if (currentApi == "e621") {
-        window.location = "?page=" + paramPage + "&api=e621" + "&search=" + paramSearch + "&pagesize=" + paramPageSize;
-    } else if (currentApi == "derpi") {
-        window.location = "?page=" + paramPage + "&api=derpi" + "&search=" + paramSearch + "&pagesize=" + paramPageSize;
-    }
+    if (currentApi == "e621") {window.location = "?page=" + paramPage + "&api=e621" + "&search=" + paramSearch + "&pagesize=" + paramPageSize;
+    } else if (currentApi == "derpi") {window.location = "?page=" + paramPage + "&api=derpi" + "&search=" + paramSearch + "&pagesize=" + paramPageSize;}
 }
 
 // advance to next page and automatically reload results
@@ -668,40 +569,24 @@ function addTagToSearch(tag) {
 }
 
 // update the displayed page number
-function updatePageNumber() {
-  pageNumberElement = document.getElementById(
-    "pageNumber"
-  ).innerText = currentPage;
-}
+function updatePageNumber() {pageNumberElement = document.getElementById("pageNumber").innerText = currentPage;}
 
 // set site to e621
-function setApiE621() {
-    currentApi = "e621";
-    document.getElementById("apiDropdownImage").setAttribute("src", "img/e621-icon.png")
-}
+function setApiE621() {currentApi = "e621"; document.getElementById("apiDropdownImage").setAttribute("src", "img/e621-icon.png";}
 
 // set site to derpibooru
-function setApiDerpi() {
-    currentApi = "derpi";
-    document.getElementById("apiDropdownImage").setAttribute("src", "img/derpi-icon.png")
-}
+function setApiDerpi() {currentApi = "derpi"; document.getElementById("apiDropdownImage").setAttribute("src", "img/derpi-icon.png")}
 
 // Print to console only if verbose output is enabled
-function verboseLog(text) {
-  if (verboseOutput) console.log(text);
-}
+function verboseLog(text) {if (verboseOutput) console.log(text);}
 
-// fix%20those%20darn%20spaces%20(depreciated)
-function restoreSpaces() {
-  document.getElementById("tags").value = currentSearch.replace("%20", " ");
-}
+// fix%20those%20darn%20spaces%20(depreciated) //WHY DOESNT THIS WORK?!
+function restoreSpaces() {document.getElementById("tags").value = currentSearch.replace("%20", " ");}
 
 // enable enter key functionality on search box
 document.getElementById("tags").addEventListener("keyup", function(event) {
   event.preventDefault();
-  if (event.keyCode === 13) {
-    getSearchQuery(true);
-  }
+  if (event.keyCode === 13) {getSearchQuery(true);}
 });
 
 //
