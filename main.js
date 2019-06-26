@@ -14,6 +14,11 @@ var gfileUrl = ""; //make this static so we can reference it later...
 
 // Before anything else, we need to check for cookies for a GDPR notice.
 
+// make sure all modals and dropdowns are initialized
+$(".modal").modal();
+$('.dropdown-trigger').dropdown({"constrainWidth": false, "container": document.getElementById("main")});
+
+
 verboseLog("Checking if GDPR cookie exists...");
 if (checkCookie("gdpr")) {
     // cookie does exist!
@@ -23,17 +28,18 @@ if (checkCookie("gdpr")) {
     verboseLog("GDPR cookie is NOT present. Displaying cookie notice.");
     // TODO: update this to be a proper on-page modal and not a janky JS prompt()
     //Working on it. ~Timber
-    alert("This website uses cookies to store personal settings. By closing or dismissing this notice, or by continuing to browse this website, you accept the use of cookies.");
-    verboseLog("User closes the dialog and thus consents to cookies.");
-    setCookie("gdpr", "true", 365);
+    $("#cookieToaster").modal("open");
+    //alert("This website uses cookies to store personal settings. By closing or dismissing this notice, or by continuing to browse this website, you accept the use of cookies.");
+    //verboseLog("User closes the dialog and thus consents to cookies.");
+    //setCookie("gdpr", "true", 365);
 }
 
 var grid = $(".grid"); // fine, i'll use jquery ._.
 //don't like jquery, hmm, delta? What's wrong with jquery? (don't answer that :P)
 
 // make sure all modals and dropdowns are initialized
-$(".modal").modal();
-$('.dropdown-trigger').dropdown({"constrainWidth": false, "container": document.getElementById("main")});
+//$(".modal").modal();
+//$('.dropdown-trigger').dropdown({"constrainWidth": false, "container": document.getElementById("main")});
 
 // URL query vars
 var lastSearchTags = "";
@@ -406,11 +412,11 @@ function getSearchQuery(userTriggered) {
 // Timber Made Functions. Could be broken.
 */
 
-function dontopenSettings() {
+//function openSettings() {
 //      alert("This feature is in development and is currently not avaliable, sorry!")
-        settingswin = window.open("settings.html", "Settings", "width=600,height=300");
+//        settingswin = window.open("settings.html", "Settings", "width=600,height=300");
 
-};
+//};
 function fullscreenOpen() {
         window.open(gfileUrl);
 
@@ -563,8 +569,8 @@ function showDetailsModal(tags, fileId, artists, fileExtension, fileUrl, fileDes
   tagArray.forEach(function(tag) {
     var currentTag = document.createElement("a");
     currentTag.href = "?search=" + tag + "&pagesize=" + document.getElementById("resultAmount").value;
-    currentTag.setAttribute("class", "waves-effect waves-light btn-flat grey lighten-2");
-    currentTag.setAttribute("style", "margin-right: 5px; margin-bottom: 10px; font-size: 11px !important;");
+    currentTag.setAttribute("class", "waves-effect waves-light btn-flat lighten-2");
+    currentTag.setAttribute("style", "margin-right: 5px; margin-bottom: 10px; font-size: 11px !important; color: #ffffff; background-color: #2F5899");
     currentTag.innerText = tag;
 
     currentTag.addEventListener("contextmenu", function(event) {

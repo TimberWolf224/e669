@@ -70,7 +70,7 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
   </head>
   
   <body>
-    <header> <!-- Don't mess with this formatting too much. It breaks stuff... Don't ask me how I know... -->
+    <header>
       <div class="navbar-fixed">
         <nav style="background-color: #284A81">
           <div class="nav-wrapper">
@@ -79,8 +79,17 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
                 <div class="row">
                   <div class="col input-field s10">
                     <input class="input-field invert-on-edit" id="tags" name="tags" type="search" placeholder="Search"/>
-                    <label class="label-icon" for="tags">
-                    <i class="material-icons">search</i></label>
+                    <label for="tags">
+                                    <a class="dropdown-trigger" href="#" data-target="apiDropdown">
+                                        <img id="apiDropdownImage" src="img/e621-icon.png" height="50px"
+                                             style="position: relative; top: 30px; filter: drop-shadow(1px 1px black)">
+                                    </a>
+
+                                    <ul id="apiDropdown" class="dropdown-content">
+                                        <li><a href="#!" onclick="setApiE621()">e621</a></li>
+                                        <li><a href="#!" onclick="setApiDerpi()">Derpibooru</a></li>
+                                    </ul>
+                                </label>
                   </div>
                   <div class="col s2 hide-on-med-and-down">
                     <a
@@ -138,13 +147,19 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
 	Also, derpiboru support is a thing here. Click the icon in the upper left.
       </div>
       <div class="grid"></div>
+    <div class="modal" id="cookieToaster" style="width: 90%; height:20%; background-color: #2F5899">
+	<p style="color: #ffffff">This website uses a cookie to store user preferences. By continuing to use this site, you are accepting the use of cookies. <br>
+	You can delete all cookies from this page from the settings menu. Or click <a href=ingredients>here</a> to learn more about what goes into our cookies.</p>
+	<a onclick="verboseLog('User closes the dialog and thus consents to cookies.'); setCookie('gdpr', 'true', 365);" class="modal-close waves-effect waves-light btn white-text"; style="background-color: #2F5899">Got it!</a>
+    </div>
 
     <!-- Thar be settings, cap'n! -->
 
-    <div class="modal modal-fixed-footer" id="settingsModal">
+    <div class="modal modal-fixed-footer" id="settingsModal" style="background-color: #152f56">
         <div class="modal-content">
-            <h4>User Settings</h4>
+            <h4 style="color: #ffffff">User Settings</h4>
             <!-- TODO: format this to look pretty -->
+		<!-- This better, Delta? :P -->
             <p>
                 <label>
                     <input type="checkbox" class="filled-in" id="verboseLogging" checked="checked">
@@ -162,47 +177,34 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
                 </label>
                 <br/>
                 <label>
-                    <input
-                            id="pageSize"
-                            name="pageSize"
-                            size="2"
-                            style="color: white; text-align: center; width: 50px; height:25px; background-color: #152f56; border-bottom: 0; border-radius: 3px;"
-                            type="number"
-                            step="10"
-                            min="10"
-                            max="320">
+                    <input id="pageSize" name="pageSize" size="2" style="color: white; text-align: center; width: 50px; height:25px; background-color: #2F5899; border-bottom: 0; border-radius: 3px;" type="number" step="10" min="5" max="320">
                     <span>Default page size</span>
                 </label>
                 <br/>
                 <label>
-                    <input
-                            id="derpiApiKey"
-                            name="derpiApiKey"
-                            style="color: white; text-align: center; width: 200px; height:25px; background-color: #152f56; border-bottom: 0; border-radius: 3px;"
-                            type="text">
+                    <input id="derpiApiKey" name="derpiApiKey" style="color: white; text-align: center; width: 200px; height:25px; background-color: #2F5899; border-bottom: 0; border-radius: 3px;" type="text">
                     <span>Derpibooru <a href="https://derpibooru.org/users/edit">API key</a> (required for R18+ results to show up)</span>
                 </label>
             </p>
         </div>
-        <div class="modal-footer">
-            <a onclick="deleteAllCookies()" class="modal-close waves-effect waves-green btn-flat red-text"><b>DELETE
-                COOKIES</b></a>
-            <a onclick="saveSettings()" class="modal-close waves-effect waves-green btn">APPLY</a>
+        <div class="modal-footer" style="background-color: #2F5899">
+            <a onclick="deleteAllCookies()" class="modal-close waves-effect waves-light btn-flat red-text"><b>Delete cookies</b></a>
+            <a onclick="saveSettings()" class="modal-close waves-effect waves-light btn white-text"; style="background-color: #2F5899">Save settings</a>
         </div>
     </div>
 
     <!-- End of settings -->
 
-      <div class="modal modal-fixed-footer" id="detailsModal" style="width: 90%; height:100%; max-height: 80%;">
+      <div class="modal modal-fixed-footer" id="detailsModal" style="width: 90%; height:100%; max-height: 80%; background-color: #152f56">
         <div class="modal-content">
           <div class="row">
             <div class="col s12 l8">
               <p id="modalImage" style="text-align: center;">text</p>
             </div>
             <div class="col s12 l4">
-              <p>Left-click to search single tags, middle-click to open a new tab, right-click to add to existing query.</p>
+              <p style="color: #ffffff">Left-click to search single tags, middle-click to open a new tab, right-click to add to existing query.</p>
               <div id="modalArtists">artists go here</div>
-              <p id="modalTags" style="display: flex; flex-direction: row; flex-wrap:wrap; justify-content: space-between;">text</p>
+              <p id="modalTags" style="display: flex; flex-direction: row; flex-wrap:wrap;">text</p>
             </div>
           </div>
 
@@ -211,18 +213,18 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
               <p id="modalDesc">text</p>
             </div>
             <div class="col s12">
-              <p id="modalMetadata">Metadata</p>
+              <p id="modalMetadata" style="color: #ffffff">Metadata</p>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="background-color: #2F5899">
           <!-- TODO: fix download so files aren't corrupted -->
-          <a class="waves-effect waves-teal btn-flat hiddendiv" id="saveButton">Save (broken)</a>
-          <a class="waves-effect waves-teal btn-flat" id="downloadButton">Download</a>
-          <a class="modal-close waves-effect waves-teal btn-flat" id="fullsizeButton">Fullsize</a>
-          <a class="modal-close waves-effect waves-teal btn-flat" id="e621Button">E621</a>
-          <a class="modal-close waves-effect waves-teal btn-flat" onclick="getSearchQuery(true)">Re-Search</a>
-          <a class="modal-close waves-effect waves-teal btn-flat" href="#!">Close</a>
+          <a class="waves-effect waves-light btn-flat hiddendiv" style="color: #ffffff" id="saveButton">Save (broken)</a>
+          <a class="waves-effect waves-light btn-flat" style="color: #ffffff" id="downloadButton">Download</a>
+          <a class="modal-close waves-effect waves-light btn-flat" style="color: #ffffff" id="fullsizeButton">Fullsize</a>
+          <a class="modal-close waves-effect waves-light btn-flat" style="color: #ffffff" id="e621Button">E621</a>
+          <a class="modal-close waves-effect waves-light btn-flat" style="color: #ffffff" onclick="getSearchQuery(true)">Re-Search</a>
+          <a class="modal-close waves-effect waves-light btn-flat" style="color: #ffffff" href="#!">Close</a>
         </div>
       </div>
 
