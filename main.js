@@ -166,10 +166,9 @@ function getSearchQuery(userTriggered) {
             // to manage the user-facing page separately from the API request page.
             // Derpibooru requires no such micromanaging as its more versatile search
             // queries remove the necessity for pagination on e669 like we do for e621.
-            requestURL = corsForwardURL + "e621.net:443/post/index.json?limit=" + resultSize + // TODO: paginate on e669->e621 side - 320 max posts per query "&page=" + currentPage + "&tags=" + tags;
-        } else if (currentApi == "derpi") {
-            requestURL = corsForwardURL + "derpibooru.org:443/search.json?perpage=" + resultSize + "&page=" + currentPage + "&q=" + tags + "&key=" + derpiApiKey;
-        }
+            requestURL = corsForwardURL + "e621.net:443/post/index.json?limit=" + resultSize + "&page=" + currentPage + "&tags=" + tags;
+	    // TODO: paginate on e669->e621 side - 320 max posts per query
+        } else if (currentApi == "derpi") {requestURL = corsForwardURL + "derpibooru.org:443/search.json?perpage=" + resultSize + "&page=" + currentPage + "&q=" + tags + "&key=" + derpiApiKey;}
 
     // create request
     verboseLog("creating request to " + requestURL);
@@ -572,7 +571,7 @@ function addTagToSearch(tag) {
 function updatePageNumber() {pageNumberElement = document.getElementById("pageNumber").innerText = currentPage;}
 
 // set site to e621
-function setApiE621() {currentApi = "e621"; document.getElementById("apiDropdownImage").setAttribute("src", "img/e621-icon.png";}
+function setApiE621() {currentApi = "e621"; document.getElementById("apiDropdownImage").setAttribute("src", "img/e621-icon.png")}
 
 // set site to derpibooru
 function setApiDerpi() {currentApi = "derpi"; document.getElementById("apiDropdownImage").setAttribute("src", "img/derpi-icon.png")}
@@ -711,6 +710,7 @@ function saveSettings() {
 
     // if user changed anything, make sure settings update accordingly
     refreshSettings();
+
 
     $("#settingsModal").modal("close");
 }
