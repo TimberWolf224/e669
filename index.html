@@ -6,6 +6,7 @@
     <title>e669</title>
     <meta content="If you don't know what this is, that's probably a good thing." name="description"/>
     <meta content="furry, anthropomorphic, e621, porn, pornography, explicit, image, booru" name="keywords"/>
+<!-- content="furry, brony, derpibooru, anthropomorphic, e621, porn, pornography, explicit, image, booru" -->    
     <meta content="deltaryz, TimberWolf224" name="author"/>
 
 <!-- no need to pretty all of these up so much, Delta. It makes it a pain to scroll past. I compacted them for my sake, remember I'm editing in Nano.
@@ -37,29 +38,22 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
     <style>
       .input-field input[type="search"] {height: 64px !important;}
       .btn-floating {background-color: #666ad1;}
-
       body {font-family: "Roboto", sans-serif; display: flex; min-height: 100vh; flex-direction: column; background-color: #152f56;}
       main {flex: 1 0 auto;}
-
       .center {margin: 0; position: absolute; top: 50%; transform: translate(0, -50%); width: 100%;}
       .grid {margin: 0 auto;}
-
       /* clearfix */
       .grid:after {content: ""; display: block; clear: both;}
       .invert-on-edit {color: white;}
-
       /* 3 columns by default */
       .grid-item {width: 30vw; float: left; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 1); transition: box-shadow 0.3s ease-in-out;}
-
       .webm-shadow {border-radius: 10px; border: 4px solid red;}
       .swf-shadow {border-radius: 10px; border: 4px solid blue;}
       .grid-item:hover {box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);}
-
       /* 5 columns for larger screens */
       @media screen and (min-width: 900px) {
         .grid-item {width: 18vw; float: left; margin-bottom: 20px;}
       }
-
       /* Shrink navigation margins for narrow screens */
       @media screen and (max-width: 600px) {
         .right {margin-left: 0px; margin-right: 0px;}
@@ -141,8 +135,63 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
       <div id="status" style="text-align: center; color: white;">
         Welcome to <b>e669</b>, a more elegant UI for <a href=https://e621.net><b>E621</b></a>.<br>If you don't know what that is,
 	that's probably a good thing.<br />
+	Also, derpiboru support is a thing here. Click the icon in the upper left.
       </div>
       <div class="grid"></div>
+
+    <!-- Thar be settings, cap'n! -->
+
+    <div class="modal modal-fixed-footer" id="settingsModal">
+        <div class="modal-content">
+            <h4>User Settings</h4>
+            <!-- TODO: format this to look pretty -->
+            <p>
+                <label>
+                    <input type="checkbox" class="filled-in" id="verboseLogging" checked="checked">
+                    <span>Verbose console output</span>
+                </label>
+                <br/>
+                <label>
+                    <input type="checkbox" class="filled-in" id="horizontalOrder" checked="checked">
+                    <span>Maintain horizontal order of search results</span>
+                </label>
+                <br/>
+                <label>
+                    <input type="checkbox" class="filled-in" id="r18" checked="checked">
+                    <span>Allow R18+ content</span>
+                </label>
+                <br/>
+                <label>
+                    <input
+                            id="pageSize"
+                            name="pageSize"
+                            size="2"
+                            style="color: white; text-align: center; width: 50px; height:25px; background-color: #152f56; border-bottom: 0; border-radius: 3px;"
+                            type="number"
+                            step="10"
+                            min="10"
+                            max="320">
+                    <span>Default page size</span>
+                </label>
+                <br/>
+                <label>
+                    <input
+                            id="derpiApiKey"
+                            name="derpiApiKey"
+                            style="color: white; text-align: center; width: 200px; height:25px; background-color: #152f56; border-bottom: 0; border-radius: 3px;"
+                            type="text">
+                    <span>Derpibooru <a href="https://derpibooru.org/users/edit">API key</a> (required for R18+ results to show up)</span>
+                </label>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a onclick="deleteAllCookies()" class="modal-close waves-effect waves-green btn-flat red-text"><b>DELETE
+                COOKIES</b></a>
+            <a onclick="saveSettings()" class="modal-close waves-effect waves-green btn">APPLY</a>
+        </div>
+    </div>
+
+    <!-- End of settings -->
 
       <div class="modal modal-fixed-footer" id="detailsModal" style="width: 90%; height:100%; max-height: 80%;">
         <div class="modal-content">
@@ -188,7 +237,7 @@ Also the links need to be local, ie, "ico/apple", not global. Leaving them globa
             <a href="https://github.com/techniponi/e669/" style="color: #ffffff">
               <img src="ico/favicon-96x96.png"
                 style="text-align: center; height: 64px; -webkit-filter: drop-shadow(0 0px 2px rgba(0, 0, 0, 0.5));"/></a>
-	    <br />e669 is created by <a href="https://twitter.com/deltaryz"><b>∆•RYZ</b></a> with help from <a href=/>TimberWolf224</a>
+	    <br />e669 is created by <a href="https://twitter.com/deltaryz"><b>∆•RYZ</b></a> with help from <a href=https://twhitevalley.net>TimberWolf224</a>
           </div>
         </div>
         <div class="col s2 right"></div>
